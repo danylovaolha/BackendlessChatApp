@@ -8,20 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		5A312FCF224A3FDF00CDB109 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */; };
-		5A312FD1224A3FDF00CDB109 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FD0224A3FDF00CDB109 /* ViewController.swift */; };
 		5A312FD4224A3FDF00CDB109 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD2224A3FDF00CDB109 /* Main.storyboard */; };
 		5A312FD6224A3FE100CDB109 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD5224A3FE100CDB109 /* Assets.xcassets */; };
 		5A312FD9224A3FE100CDB109 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD7224A3FE100CDB109 /* LaunchScreen.storyboard */; };
+		5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE0224A425900CDB109 /* LoginViewController.swift */; };
+		5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE3224A428F00CDB109 /* SignUpViewController.swift */; };
+		5A8899A3224A5E1E00AA70B6 /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A8899A2224A5E1E00AA70B6 /* chat.png */; };
+		5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5A312FCB224A3FDF00CDB109 /* BackendlessChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BackendlessChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5A312FD0224A3FDF00CDB109 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5A312FD3224A3FDF00CDB109 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A312FD5224A3FE100CDB109 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A312FD8224A3FE100CDB109 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A312FDA224A3FE100CDB109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A312FE0224A425900CDB109 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		5A312FE3224A428F00CDB109 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		5A8899A2224A5E1E00AA70B6 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackendlessChatApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +47,7 @@
 			children = (
 				5A312FCD224A3FDF00CDB109 /* BackendlessChatApp */,
 				5A312FCC224A3FDF00CDB109 /* Products */,
+				5E855E15224AC6400012FC03 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +62,41 @@
 		5A312FCD224A3FDF00CDB109 /* BackendlessChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */,
 				5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */,
-				5A312FD0224A3FDF00CDB109 /* ViewController.swift */,
+				5A312FE2224A426000CDB109 /* ViewControllers */,
+				5A8899A1224A5E1E00AA70B6 /* Resources */,
 				5A312FD2224A3FDF00CDB109 /* Main.storyboard */,
-				5A312FD5224A3FE100CDB109 /* Assets.xcassets */,
 				5A312FD7224A3FE100CDB109 /* LaunchScreen.storyboard */,
 				5A312FDA224A3FE100CDB109 /* Info.plist */,
+				5A312FD5224A3FE100CDB109 /* Assets.xcassets */,
 			);
 			path = BackendlessChatApp;
+			sourceTree = "<group>";
+		};
+		5A312FE2224A426000CDB109 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5A312FE0224A425900CDB109 /* LoginViewController.swift */,
+				5A312FE3224A428F00CDB109 /* SignUpViewController.swift */,
+				5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5A8899A1224A5E1E00AA70B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5A8899A2224A5E1E00AA70B6 /* chat.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5E855E15224AC6400012FC03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +131,23 @@
 				TargetAttributes = {
 					5A312FCA224A3FDF00CDB109 = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.AutoFillCredentialProvider = {
+								enabled = 0;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -125,6 +177,7 @@
 				5A312FD9224A3FE100CDB109 /* LaunchScreen.storyboard in Resources */,
 				5A312FD6224A3FE100CDB109 /* Assets.xcassets in Resources */,
 				5A312FD4224A3FDF00CDB109 /* Main.storyboard in Resources */,
+				5A8899A3224A5E1E00AA70B6 /* chat.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +188,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A312FD1224A3FDF00CDB109 /* ViewController.swift in Sources */,
+				5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */,
+				5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */,
+				5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */,
 				5A312FCF224A3FDF00CDB109 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +340,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73FSJC7BUF;
 				INFOPLIST_FILE = BackendlessChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73FSJC7BUF;
 				INFOPLIST_FILE = BackendlessChatApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
