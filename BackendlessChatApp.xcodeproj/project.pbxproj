@@ -14,6 +14,7 @@
 		5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE0224A425900CDB109 /* LoginViewController.swift */; };
 		5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE3224A428F00CDB109 /* SignUpViewController.swift */; };
 		5A8899A3224A5E1E00AA70B6 /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A8899A2224A5E1E00AA70B6 /* chat.png */; };
+		5E780109224BEA1E004E4984 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E780108224BEA1E004E4984 /* Extensions.swift */; };
 		5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		5A312FE0224A425900CDB109 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5A312FE3224A428F00CDB109 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		5A8899A2224A5E1E00AA70B6 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		5E780108224BEA1E004E4984 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackendlessChatApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,6 +89,7 @@
 		5A8899A1224A5E1E00AA70B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5E780108224BEA1E004E4984 /* Extensions.swift */,
 				5A8899A2224A5E1E00AA70B6 /* chat.png */,
 			);
 			path = Resources;
@@ -188,6 +191,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E780109224BEA1E004E4984 /* Extensions.swift in Sources */,
 				5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */,
 				5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */,
 				5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */,

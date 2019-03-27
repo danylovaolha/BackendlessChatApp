@@ -280,7 +280,7 @@
         <!--Chat View Controller-->
         <scene sceneID="RDm-HF-Eiq">
             <objects>
-                <viewController id="BW2-Qg-Mhq" customClass="ChatViewController" customModule="ChatWithImages" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BW2-Qg-Mhq" customClass="ChatViewController" customModule="BackendlessChatApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5iO-cT-ScJ"/>
                         <viewControllerLayoutGuide type="bottom" id="IQn-mC-G9B"/>
@@ -289,7 +289,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7jU-oB-gC7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7jU-oB-gC7">
                                 <rect key="frame" x="0.0" y="64" width="320" height="459"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -325,16 +325,36 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xwr-ec-vlX">
+                                <rect key="frame" x="5" y="523" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Xwr-ec-vlX" secondAttribute="height" multiplier="1:1" id="TC4-bo-kKd"/>
+                                </constraints>
+                                <state key="normal" title="📎"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4B-Ur-JiZ">
+                                <rect key="frame" x="275" y="523" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Q4B-Ur-JiZ" secondAttribute="height" multiplier="1:1" id="Gwa-7a-fuf"/>
+                                </constraints>
+                                <state key="normal" title="➡️"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="7jU-oB-gC7" firstAttribute="leading" secondItem="isq-Gc-TD6" secondAttribute="leading" id="9Yz-Yg-4w2"/>
+                            <constraint firstItem="5fF-Sl-LEM" firstAttribute="leading" secondItem="Xwr-ec-vlX" secondAttribute="trailing" constant="5" id="Eh1-0p-XwS"/>
                             <constraint firstAttribute="trailing" secondItem="7jU-oB-gC7" secondAttribute="trailing" id="Ffg-EI-4eG"/>
+                            <constraint firstItem="nQL-c7-Aml" firstAttribute="trailing" secondItem="Q4B-Ur-JiZ" secondAttribute="trailing" constant="5" id="I2n-Iy-nsy"/>
                             <constraint firstItem="5fF-Sl-LEM" firstAttribute="leading" secondItem="nQL-c7-Aml" secondAttribute="leading" constant="50" id="LaN-Yn-JXi"/>
                             <constraint firstItem="nQL-c7-Aml" firstAttribute="bottom" secondItem="5fF-Sl-LEM" secondAttribute="bottom" constant="5" id="YGU-fF-ias"/>
                             <constraint firstItem="7jU-oB-gC7" firstAttribute="top" secondItem="5iO-cT-ScJ" secondAttribute="bottom" id="axY-ls-UCm"/>
+                            <constraint firstItem="nQL-c7-Aml" firstAttribute="bottom" secondItem="Xwr-ec-vlX" secondAttribute="bottom" constant="5" id="bCz-0r-pZa"/>
+                            <constraint firstItem="Xwr-ec-vlX" firstAttribute="leading" secondItem="nQL-c7-Aml" secondAttribute="leading" constant="5" id="dFT-bM-sp3"/>
+                            <constraint firstItem="Q4B-Ur-JiZ" firstAttribute="leading" secondItem="5fF-Sl-LEM" secondAttribute="trailing" constant="5" id="lr6-bG-dEg"/>
                             <constraint firstItem="nQL-c7-Aml" firstAttribute="trailing" secondItem="5fF-Sl-LEM" secondAttribute="trailing" constant="50" id="ses-nS-ePN"/>
                             <constraint firstItem="5fF-Sl-LEM" firstAttribute="top" secondItem="7jU-oB-gC7" secondAttribute="bottom" constant="5" id="sxB-eY-RzK"/>
+                            <constraint firstItem="nQL-c7-Aml" firstAttribute="bottom" secondItem="Q4B-Ur-JiZ" secondAttribute="bottom" constant="5" id="u41-Kd-5U6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nQL-c7-Aml"/>
                     </view>

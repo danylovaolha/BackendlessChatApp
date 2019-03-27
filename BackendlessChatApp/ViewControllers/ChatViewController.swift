@@ -5,16 +5,22 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageInputField: UITextView!
-    @IBOutlet weak var aspectRatioConstraint: NSLayoutConstraint?
+    
+    private var dataSource: [String]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.delegate = self
         
         self.messageInputField.delegate = self
         self.messageInputField.layer.borderColor = UIColor.lightGray.cgColor
         self.messageInputField.layer.borderWidth = 1
         self.messageInputField.layer.cornerRadius = 10
-        self.messageInputField.textContainer.maximumNumberOfLines = 10
+        self.messageInputField.translatesAutoresizingMaskIntoConstraints = false
+        self.messageInputField.isScrollEnabled = false
+        
+        dataSource = ["Hello1", "Hello2", "Hello3", "Hello4", "Hello5", "Hello6","Hello7", "Hello8", "Hello9", "Hello10", "Hello11", "Hello12"]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,9 +57,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             viewFrame.size.height -= keyboardSize.height
             self.view.frame = viewFrame
         })
-        if (self.tableView.numberOfRows(inSection: 0) > 0) {
-            let indexPath = IndexPath(row: self.tableView.numberOfRows(inSection: 0) - 1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        scrollToBottom()
+    }
+    
+    func scrollToBottom()  {
+        DispatchQueue.main.async {
+            let point = CGPoint(x: 0, y: self.tableView.contentSize.height + self.tableView.contentInset.bottom - self.tableView.frame.height)
+            if point.y >= 0{
+                self.tableView.setContentOffset(point, animated: true)
+            }
         }
     }
     
@@ -66,10 +78,29 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         })
     }
     
-    func textViewDidChange(_ textView: UITextView) {
-        let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        textView.frame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        scrollToBottom()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        scrollToBottom()
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {        
+        if textView.layoutManager.numberOfLines <= 10 {
+            textView.isScrollEnabled = false
+            let size = CGSize(width: textView.frame.width, height: .infinity)
+            let estimatedSize = textView.sizeThatFits(size)
+            textView.constraints.forEach({ (constraint) in
+                if constraint.firstAttribute == .height {
+                    constraint.constant = estimatedSize.height
+                }
+            })
+            scrollToBottom()
+        }
+        else {
+            textView.isScrollEnabled = true
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,14 +108,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
-        cell.textLabel?.text = "AAA"
+        cell.textLabel?.text = dataSource[indexPath.row]
         return cell
     }
+    
+    
+    
 }
 
 
