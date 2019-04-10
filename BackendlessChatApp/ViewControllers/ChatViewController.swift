@@ -5,22 +5,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageInputField: UITextView!
-    
-    private var dataSource: [String]!
+    @IBOutlet weak var sendButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         
+        setupMessageField()
+        clearMessageField()
+    }
+    
+    func setupMessageField() {
         self.messageInputField.delegate = self
-        self.messageInputField.layer.borderColor = UIColor.lightGray.cgColor
+        self.messageInputField.layer.borderColor = UIColor.lightText.cgColor
         self.messageInputField.layer.borderWidth = 1
         self.messageInputField.layer.cornerRadius = 10
         self.messageInputField.translatesAutoresizingMaskIntoConstraints = false
         self.messageInputField.isScrollEnabled = false
-        
-        dataSource = ["Hello1", "Hello2", "Hello3", "Hello4", "Hello5", "Hello6","Hello7", "Hello8", "Hello9", "Hello10", "Hello11", "Hello12"]
+    }
+    
+    func clearMessageField() {
+        self.sendButton.isEnabled = false
+        self.messageInputField.text = "Message"
+        self.messageInputField.textColor = UIColor.lightGray
+        self.messageInputField.constraints.forEach({ (constraint) in
+            if constraint.firstAttribute == .height {
+                constraint.constant = 35
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,13 +93,35 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         scrollToBottom()
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+            self.sendButton.isEnabled = false
+        }
+        else {
+            self.sendButton.isEnabled = true
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         scrollToBottom()
+        if textView.text.isEmpty {
+            textView.text = "Message"
+            textView.textColor = UIColor.lightGray
+            self.sendButton.isEnabled = false
+        }
+        else {
+            self.sendButton.isEnabled = true
+        }
     }
     
-    func textViewDidChange(_ textView: UITextView) {        
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            self.sendButton.isEnabled = false
+        }
+        else {
+            self.sendButton.isEnabled = true
+        }
         if textView.layoutManager.numberOfLines <= 10 {
             textView.isScrollEnabled = false
             let size = CGSize(width: textView.frame.width, height: .infinity)
@@ -108,17 +143,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
-        cell.textLabel?.text = dataSource[indexPath.row]
-        return cell
+        return UITableViewCell()
     }
     
+    @IBAction func longPress(press: UILongPressGestureRecognizer) {
+        press.view?.backgroundColor = UIColor.blue
+    }
     
-    
+    @IBAction func pressedSend(_ sender: Any) {
+        clearMessageField()
+    }
 }
 
 

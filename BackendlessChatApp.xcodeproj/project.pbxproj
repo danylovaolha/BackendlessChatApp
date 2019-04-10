@@ -13,7 +13,11 @@
 		5A312FD9224A3FE100CDB109 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD7224A3FE100CDB109 /* LaunchScreen.storyboard */; };
 		5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE0224A425900CDB109 /* LoginViewController.swift */; };
 		5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FE3224A428F00CDB109 /* SignUpViewController.swift */; };
-		5A8899A3224A5E1E00AA70B6 /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A8899A2224A5E1E00AA70B6 /* chat.png */; };
+		5E1BBC5E225DDC88000F2BEF /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1BBC5D225DDC88000F2BEF /* send.png */; };
+		5E1BBC63225DE7D0000F2BEF /* MyTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BBC62225DE7D0000F2BEF /* MyTextMessageCell.swift */; };
+		5E1BBC65225DE7EA000F2BEF /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1BBC64225DE7EA000F2BEF /* TextMessageCell.swift */; };
+		5E1EF7D5225DD4E200E42908 /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1EF7D4225DD4E100E42908 /* chat.png */; };
+		5E1EF7DB225DD61D00E42908 /* attachment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1EF7DA225DD61D00E42908 /* attachment.png */; };
 		5E780109224BEA1E004E4984 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E780108224BEA1E004E4984 /* Extensions.swift */; };
 		5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */; };
 /* End PBXBuildFile section */
@@ -27,7 +31,11 @@
 		5A312FDA224A3FE100CDB109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A312FE0224A425900CDB109 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5A312FE3224A428F00CDB109 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		5A8899A2224A5E1E00AA70B6 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		5E1BBC5D225DDC88000F2BEF /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
+		5E1BBC62225DE7D0000F2BEF /* MyTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextMessageCell.swift; sourceTree = "<group>"; };
+		5E1BBC64225DE7EA000F2BEF /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
+		5E1EF7D4225DD4E100E42908 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		5E1EF7DA225DD61D00E42908 /* attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachment.png; sourceTree = "<group>"; };
 		5E780108224BEA1E004E4984 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackendlessChatApp.entitlements; sourceTree = "<group>"; };
@@ -64,8 +72,10 @@
 		5A312FCD224A3FDF00CDB109 /* BackendlessChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				5E1BBC5F225DE785000F2BEF /* Cells */,
 				5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */,
 				5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */,
+				5E780108224BEA1E004E4984 /* Extensions.swift */,
 				5A312FE2224A426000CDB109 /* ViewControllers */,
 				5A8899A1224A5E1E00AA70B6 /* Resources */,
 				5A312FD2224A3FDF00CDB109 /* Main.storyboard */,
@@ -89,10 +99,20 @@
 		5A8899A1224A5E1E00AA70B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5E780108224BEA1E004E4984 /* Extensions.swift */,
-				5A8899A2224A5E1E00AA70B6 /* chat.png */,
+				5E1EF7D4225DD4E100E42908 /* chat.png */,
+				5E1EF7DA225DD61D00E42908 /* attachment.png */,
+				5E1BBC5D225DDC88000F2BEF /* send.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		5E1BBC5F225DE785000F2BEF /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5E1BBC62225DE7D0000F2BEF /* MyTextMessageCell.swift */,
+				5E1BBC64225DE7EA000F2BEF /* TextMessageCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		5E855E15224AC6400012FC03 /* Frameworks */ = {
@@ -180,7 +200,9 @@
 				5A312FD9224A3FE100CDB109 /* LaunchScreen.storyboard in Resources */,
 				5A312FD6224A3FE100CDB109 /* Assets.xcassets in Resources */,
 				5A312FD4224A3FDF00CDB109 /* Main.storyboard in Resources */,
-				5A8899A3224A5E1E00AA70B6 /* chat.png in Resources */,
+				5E1EF7DB225DD61D00E42908 /* attachment.png in Resources */,
+				5E1EF7D5225DD4E200E42908 /* chat.png in Resources */,
+				5E1BBC5E225DDC88000F2BEF /* send.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,10 +213,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E1BBC65225DE7EA000F2BEF /* TextMessageCell.swift in Sources */,
 				5E780109224BEA1E004E4984 /* Extensions.swift in Sources */,
 				5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */,
 				5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */,
 				5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */,
+				5E1BBC63225DE7D0000F2BEF /* MyTextMessageCell.swift in Sources */,
 				5A312FCF224A3FDF00CDB109 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
