@@ -198,9 +198,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyTextMessageCell", for: indexPath) as! MyTextMessageCell
             cell.textView.text = messageText
             cell.dateLabel.text = formatter.string(from: created)
-            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(press:)))
+            
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
             longPress.minimumPressDuration = 1.0
-            cell.addGestureRecognizer(longPress)
+            cell.textView.addGestureRecognizer(longPress)
+            
             return cell
         }
         else {
@@ -211,17 +213,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 cell.userNameLabel.text = userName
                 cell.textView.text = messageText
                 cell.dateLabel.text = formatter.string(from: created)
-                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(press:)))
+                
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
                 longPress.minimumPressDuration = 1.0
-                cell.addGestureRecognizer(longPress)
+                cell.textView.addGestureRecognizer(longPress)
+                
                 return cell
             }
         }
         return UITableViewCell()
     }
     
-    @IBAction func longPress(press: UILongPressGestureRecognizer) {
-        press.view?.backgroundColor = UIColor.blue
+    @IBAction func longPress(sender: UILongPressGestureRecognizer) {
+        let touch = sender.location(in: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: touch)
+        print("row = \(indexPath?.row)")
     }
     
     @IBAction func pressedSend(_ sender: Any) {
