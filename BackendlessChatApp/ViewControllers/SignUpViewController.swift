@@ -10,6 +10,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIScrollViewD
     
     private var currentTextField: UITextField?
     
+    private let alert = Alert.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,6 +76,33 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIScrollViewD
         self.currentTextField?.resignFirstResponder()
     }
     
+    func clearFields() {
+        self.nameField.text = ""
+        self.emailField.text = ""
+        self.passwordField.text = ""
+    }
+    
     @IBAction func pressedSignUp(_ sender: Any) {
+        if let email = emailField.text, !email.isEmpty,
+            let password = passwordField.text, !password.isEmpty {
+            let user = BackendlessUser()
+            user.email = email as NSString
+            user.password = password as NSString
+            if let name = nameField.text {
+                user.name = name as NSString
+            }
+            Backendless.sharedInstance()?.userService.register(user, response: { registeredUser in
+                self.alert.showRegistrationCompleteAlert(onViewController: self)
+            }, error: { fault in
+                self.clearFields()
+                if let errorMessage = fault?.message {
+                    self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+                }
+            })
+        }
+        else {
+            self.clearFields()
+            alert.showErrorAlert(message: "Please check if your email and password are entered correctly", onViewController: self)
+        }
     }
 }

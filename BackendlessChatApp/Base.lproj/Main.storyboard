@@ -54,7 +54,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="pressedStartChatting:" destination="0Qt-yz-glL" eventType="touchUpInside" id="arP-8x-wZK"/>
-                                                    <segue destination="BW2-Qg-Mhq" kind="show" id="t1w-R5-b66"/>
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FjM-2T-DnU">
@@ -86,6 +85,9 @@
                                                 <state key="normal" title="Forgot password?">
                                                     <color key="titleColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="pressedForgotPassword:" destination="0Qt-yz-glL" eventType="touchUpInside" id="T5I-eO-raZ"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -137,6 +139,7 @@
                         <outlet property="passwordField" destination="Mjq-kV-VgH" id="crr-AV-2WE"/>
                         <outlet property="rememberMeSwitch" destination="h6P-Z7-Ggr" id="SDZ-MV-5Ui"/>
                         <outlet property="scrollView" destination="Klr-Vq-BWV" id="jdW-jD-uxX"/>
+                        <segue destination="BW2-Qg-Mhq" kind="show" identifier="segueToChatVC" id="nJ6-Pb-agW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJJ-gx-fGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -250,9 +253,11 @@
                         <outlet property="nameField" destination="am4-eb-nYb" id="kaZ-FZ-ea6"/>
                         <outlet property="passwordField" destination="gZW-5o-oYL" id="I7N-xW-uXm"/>
                         <outlet property="scrollView" destination="3c9-Jp-MEI" id="74Q-if-I5S"/>
+                        <segue destination="NAD-EJ-UIJ" kind="unwind" identifier="unwindToLoginVC" unwindAction="unwindToLoginVCWithSegue:" id="FOH-QT-7mf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fug-yi-WWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="NAD-EJ-UIJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1973" y="865"/>
         </scene>
@@ -331,11 +336,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Jo-M5-Hi4">
                                                     <rect key="frame" x="353.33333333333331" y="10" width="25.666666666666686" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" red="0.0" green="0.3294117647" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" scrollEnabled="NO" text="Message" translatesAutoresizingMaskIntoConstraints="NO" id="kUY-HI-TbI">
-                                                    <rect key="frame" x="100" y="33" width="294" height="56.666666666666657"/>
+                                                    <rect key="frame" x="315" y="33" width="79" height="56.666666666666657"/>
                                                     <color key="backgroundColor" red="0.0" green="0.56862745100000001" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -350,7 +355,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="kUY-HI-TbI" secondAttribute="trailing" constant="20" id="6Gd-Yo-F2l"/>
-                                                <constraint firstItem="kUY-HI-TbI" firstAttribute="leading" secondItem="pdA-gE-sqE" secondAttribute="leading" constant="100" id="F6e-wg-GDX"/>
+                                                <constraint firstItem="kUY-HI-TbI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pdA-gE-sqE" secondAttribute="leading" constant="100" id="Ccq-D2-HOa"/>
                                                 <constraint firstItem="xxf-1k-Unf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pdA-gE-sqE" secondAttribute="leading" constant="20" symbolic="YES" id="QQ9-07-amN"/>
                                                 <constraint firstItem="0Jo-M5-Hi4" firstAttribute="top" secondItem="pdA-gE-sqE" secondAttribute="top" constant="10" id="RXr-BK-dzF"/>
                                                 <constraint firstItem="xxf-1k-Unf" firstAttribute="top" secondItem="kUY-HI-TbI" secondAttribute="bottom" constant="5" id="Skv-NO-cWq"/>
@@ -376,11 +381,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not You" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pmy-fA-bhS">
                                                     <rect key="frame" x="35" y="10" width="53.666666666666657" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" red="0.0" green="0.3294117647" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" scrollEnabled="NO" text="Message" translatesAutoresizingMaskIntoConstraints="NO" id="c7G-rj-Dsg">
-                                                    <rect key="frame" x="20" y="33" width="294" height="39.666666666666657"/>
+                                                    <rect key="frame" x="20" y="33" width="79" height="39.666666666666657"/>
                                                     <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -395,7 +400,6 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Pmy-fA-bhS" firstAttribute="leading" secondItem="DzN-we-qmn" secondAttribute="leading" constant="35" id="BIl-sL-hGr"/>
-                                                <constraint firstAttribute="trailing" secondItem="c7G-rj-Dsg" secondAttribute="trailing" constant="100" id="FBc-E7-d9v"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mI1-G8-LHA" secondAttribute="trailing" constant="20" symbolic="YES" id="IyZ-Eb-tCq"/>
                                                 <constraint firstItem="mI1-G8-LHA" firstAttribute="leading" secondItem="DzN-we-qmn" secondAttribute="leading" constant="35" id="Psd-Dj-eZH"/>
                                                 <constraint firstItem="mI1-G8-LHA" firstAttribute="top" secondItem="c7G-rj-Dsg" secondAttribute="bottom" constant="5" id="aZQ-Sz-sdv"/>
@@ -403,12 +407,14 @@
                                                 <constraint firstItem="Pmy-fA-bhS" firstAttribute="top" secondItem="DzN-we-qmn" secondAttribute="top" constant="10" id="eU7-db-74O"/>
                                                 <constraint firstItem="c7G-rj-Dsg" firstAttribute="top" secondItem="Pmy-fA-bhS" secondAttribute="bottom" constant="5" id="ib0-EY-9xC"/>
                                                 <constraint firstItem="c7G-rj-Dsg" firstAttribute="leading" secondItem="DzN-we-qmn" secondAttribute="leading" constant="20" id="qMZ-Ys-rx1"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c7G-rj-Dsg" secondAttribute="trailing" constant="100" id="vTE-nI-E2U"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Pmy-fA-bhS" secondAttribute="trailing" constant="20" symbolic="YES" id="wty-pK-rXJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateLabel" destination="mI1-G8-LHA" id="Jbu-By-wxu"/>
                                             <outlet property="textView" destination="c7G-rj-Dsg" id="weT-oH-6hA"/>
+                                            <outlet property="userNameLabel" destination="Pmy-fA-bhS" id="mu6-7O-X9t"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

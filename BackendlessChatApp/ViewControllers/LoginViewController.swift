@@ -2,13 +2,17 @@
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
-
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     
     private var currentTextField: UITextField?
+    private var yourUser: BackendlessUser?
+    
+    private let alert = Alert.shared
+    private let chatSegue = "segueToChatVC"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let currentUser = Backendless.sharedInstance()?.userService.currentUser, Backendless.sharedInstance()?.userService.isValidUserToken() ?? false {
+            self.yourUser = currentUser
+            performSegue(withIdentifier: chatSegue, sender: nil)
+        }
+        
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.toolbar.isHidden = true
         registerKeyboardNotifications()
@@ -71,6 +80,49 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
         self.currentTextField?.resignFirstResponder()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == chatSegue,
+            let chatVC = segue.destination as? ChatViewController {
+            chatVC.yourUser = self.yourUser
+        }
+    }
+    
+    func clearFields() {
+        self.emailField.text = ""
+        self.passwordField.text = ""
+    }
+    
     @IBAction func pressedStartChatting(_ sender: Any) {
+        if self.rememberMeSwitch.isOn {
+            Backendless.sharedInstance()?.userService.setStayLoggedIn(true)
+        }
+        else {
+            Backendless.sharedInstance()?.userService.setStayLoggedIn(false)
+        }
+        
+        if let email = emailField.text, !email.isEmpty,
+            let password = passwordField.text, !password.isEmpty {
+            Backendless.sharedInstance()?.userService.login(email, password: password, response: { loggedInUser in
+                self.yourUser = loggedInUser
+                self.performSegue(withIdentifier: self.chatSegue, sender: nil)
+            }, error: { fault in
+                self.clearFields()
+                if let errorMessage = fault?.message {
+                    self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+                }
+            })
+        }
+        else {
+            clearFields()
+            alert.showErrorAlert(message: "Please check if your email and password are entered correctly", onViewController: self)
+        }
+    }
+    
+    @IBAction func pressedForgotPassword(_ sender: Any) {
+        alert.showRestorePasswordAlert(onViewController: self)
+    }
+    
+    @IBAction func unwindToLoginVC(segue: UIStoryboardSegue) {
+        
     }
 }

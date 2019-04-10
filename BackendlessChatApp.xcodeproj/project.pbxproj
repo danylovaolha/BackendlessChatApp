@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3E6A0BDF91C03B1B7EF2A0 /* Pods_BackendlessChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E91A92223ECE6252CC4F341 /* Pods_BackendlessChatApp.framework */; };
 		5A312FCF224A3FDF00CDB109 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */; };
 		5A312FD4224A3FDF00CDB109 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD2224A3FDF00CDB109 /* Main.storyboard */; };
 		5A312FD6224A3FE100CDB109 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A312FD5224A3FE100CDB109 /* Assets.xcassets */; };
@@ -20,9 +21,12 @@
 		5E1EF7DB225DD61D00E42908 /* attachment.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E1EF7DA225DD61D00E42908 /* attachment.png */; };
 		5E780109224BEA1E004E4984 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E780108224BEA1E004E4984 /* Extensions.swift */; };
 		5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */; };
+		5E9BA976225E005F00550D97 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BA975225E005F00550D97 /* Alert.swift */; };
+		5EA0E54D225E1FB50013CF9B /* MessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0E54C225E1FB50013CF9B /* MessageObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41DEC5A9B8DA937748A4A693 /* Pods-BackendlessChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackendlessChatApp.debug.xcconfig"; path = "Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5A312FCB224A3FDF00CDB109 /* BackendlessChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BackendlessChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A312FD3224A3FDF00CDB109 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -38,7 +42,11 @@
 		5E1EF7DA225DD61D00E42908 /* attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachment.png; sourceTree = "<group>"; };
 		5E780108224BEA1E004E4984 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		5E9BA975225E005F00550D97 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackendlessChatApp.entitlements; sourceTree = "<group>"; };
+		5EA0E54C225E1FB50013CF9B /* MessageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageObject.swift; sourceTree = "<group>"; };
+		742EFF5CFFC87E6D12C291CB /* Pods-BackendlessChatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackendlessChatApp.release.xcconfig"; path = "Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp.release.xcconfig"; sourceTree = "<group>"; };
+		9E91A92223ECE6252CC4F341 /* Pods_BackendlessChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BackendlessChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,18 +54,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B3E6A0BDF91C03B1B7EF2A0 /* Pods_BackendlessChatApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30D8E1734CDC9B8562EA93E1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				41DEC5A9B8DA937748A4A693 /* Pods-BackendlessChatApp.debug.xcconfig */,
+				742EFF5CFFC87E6D12C291CB /* Pods-BackendlessChatApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		5A312FC2224A3FDF00CDB109 = {
 			isa = PBXGroup;
 			children = (
 				5A312FCD224A3FDF00CDB109 /* BackendlessChatApp */,
 				5A312FCC224A3FDF00CDB109 /* Products */,
 				5E855E15224AC6400012FC03 /* Frameworks */,
+				30D8E1734CDC9B8562EA93E1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,7 +94,9 @@
 				5E1BBC5F225DE785000F2BEF /* Cells */,
 				5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */,
 				5A312FCE224A3FDF00CDB109 /* AppDelegate.swift */,
+				5E9BA975225E005F00550D97 /* Alert.swift */,
 				5E780108224BEA1E004E4984 /* Extensions.swift */,
+				5EA0E54C225E1FB50013CF9B /* MessageObject.swift */,
 				5A312FE2224A426000CDB109 /* ViewControllers */,
 				5A8899A1224A5E1E00AA70B6 /* Resources */,
 				5A312FD2224A3FDF00CDB109 /* Main.storyboard */,
@@ -118,6 +139,7 @@
 		5E855E15224AC6400012FC03 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E91A92223ECE6252CC4F341 /* Pods_BackendlessChatApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -129,9 +151,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5A312FDD224A3FE100CDB109 /* Build configuration list for PBXNativeTarget "BackendlessChatApp" */;
 			buildPhases = (
+				BB5D1737DFB70B05C59E7842 /* [CP] Check Pods Manifest.lock */,
 				5A312FC7224A3FDF00CDB109 /* Sources */,
 				5A312FC8224A3FDF00CDB109 /* Frameworks */,
 				5A312FC9224A3FDF00CDB109 /* Resources */,
+				05BA3F8DC2CBE695BACBF3AD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,14 +232,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05BA3F8DC2CBE695BACBF3AD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB5D1737DFB70B05C59E7842 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BackendlessChatApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5A312FC7224A3FDF00CDB109 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EA0E54D225E1FB50013CF9B /* MessageObject.swift in Sources */,
 				5E1BBC65225DE7EA000F2BEF /* TextMessageCell.swift in Sources */,
 				5E780109224BEA1E004E4984 /* Extensions.swift in Sources */,
 				5A312FE4224A428F00CDB109 /* SignUpViewController.swift in Sources */,
+				5E9BA976225E005F00550D97 /* Alert.swift in Sources */,
 				5A312FE1224A425900CDB109 /* LoginViewController.swift in Sources */,
 				5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */,
 				5E1BBC63225DE7D0000F2BEF /* MyTextMessageCell.swift in Sources */,
@@ -363,6 +431,7 @@
 		};
 		5A312FDE224A3FE100CDB109 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 41DEC5A9B8DA937748A4A693 /* Pods-BackendlessChatApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -375,6 +444,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.backendless.BackendlessChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,6 +452,7 @@
 		};
 		5A312FDF224A3FE100CDB109 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 742EFF5CFFC87E6D12C291CB /* Pods-BackendlessChatApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -394,6 +465,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.backendless.BackendlessChatApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Pods/Backendless/SDK/ios/backendless/include/Backendless-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

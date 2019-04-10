@@ -3,6 +3,7 @@ import UIKit
 
 class TextMessageCell: UITableViewCell {
     
+    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var dateLabel: UILabel!
 

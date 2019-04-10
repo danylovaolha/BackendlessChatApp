@@ -7,13 +7,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var messageInputField: UITextView!
     @IBOutlet weak var sendButton: UIButton!
     
+    var yourUser: BackendlessUser!
+    
+    private var messages: [MessageObject]!
+    
+    private let channelName = "MyChannel"
+    private let alert = Alert.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tableView.delegate = self
-        
         setupMessageField()
         clearMessageField()
+        messages = [MessageObject]()
+        subscribeForChannel()
     }
     
     func setupMessageField() {
@@ -26,6 +33,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func clearMessageField() {
+        self.view.endEditing(true)
         self.sendButton.isEnabled = false
         self.messageInputField.text = "Message"
         self.messageInputField.textColor = UIColor.lightGray
@@ -34,6 +42,38 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 constraint.constant = 35
             }
         })
+    }
+    
+    func subscribeForChannel() {
+        let channel = Backendless.sharedInstance()?.messaging.subscribe(channelName)
+        
+        channel?.addMessageListenerDictionary({ message in
+            let messageObject = MessageObject()
+            if let message = message as? [String : Any] {
+                if let userId = message["userId"] as? String {
+                    messageObject.userId = userId
+                }
+                if let userName = message["userName"] as? String {
+                    messageObject.userName = userName
+                }
+                if let messageText = message["messageText"] as? String {
+                    messageObject.messageText = messageText
+                }
+                if let created = message["created"] as? Int {
+                    messageObject.created = self.intToDate(intVal: created)
+                }
+                self.messages.append(messageObject)
+                self.tableView.reloadData()
+            }
+        }, error: { fault in
+            if let errorMessage = fault?.message {
+                self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+            }
+        })
+    }
+    
+    func intToDate(intVal: Int) -> Date {
+        return Date(timeIntervalSince1970: TimeInterval(intVal / 1000))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -143,10 +183,40 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let messageObject = messages[indexPath.row]
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss / MMM d, yyyy"
+        
+        if messageObject.userId == yourUser.objectId as String?,
+            let messageText = messageObject.messageText,
+            let created = messageObject.created {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyTextMessageCell", for: indexPath) as! MyTextMessageCell
+            cell.textView.text = messageText
+            cell.dateLabel.text = formatter.string(from: created)
+            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(press:)))
+            longPress.minimumPressDuration = 1.0
+            cell.addGestureRecognizer(longPress)
+            return cell
+        }
+        else {
+            if  let userName = messageObject.userName,
+                let messageText = messageObject.messageText,
+                let created = messageObject.created {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TextMessageCell", for: indexPath) as! TextMessageCell
+                cell.userNameLabel.text = userName
+                cell.textView.text = messageText
+                cell.dateLabel.text = formatter.string(from: created)
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(press:)))
+                longPress.minimumPressDuration = 1.0
+                cell.addGestureRecognizer(longPress)
+                return cell
+            }
+        }
         return UITableViewCell()
     }
     
@@ -155,7 +225,26 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func pressedSend(_ sender: Any) {
-        clearMessageField()
+        var message = [String : Any]()
+        
+        if let messageText = messageInputField.text {
+            message["messageText"] = messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        }
+        if let userName = yourUser.name {
+            message["userName"] = userName
+        }
+        else if let userName = yourUser.email {
+            message["userName"] = userName
+        }
+        message["userId"] = yourUser.objectId
+        message["created"] = Date()
+        Backendless.sharedInstance()?.messaging.publish(channelName, message: message, response: { messageStatus in
+            self.clearMessageField()
+        }, error: { fault in
+            if let errorMessage = fault?.message {
+                self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+            }
+        })
     }
 }
 
