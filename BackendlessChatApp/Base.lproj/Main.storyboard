@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--Logout-->
         <scene sceneID="9aP-ck-LTu">
             <objects>
                 <viewController id="0Qt-yz-glL" customClass="LoginViewController" customModule="BackendlessChatApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -131,9 +131,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hCN-qZ-H6h"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Fkd-aA-3nr">
-                        <barButtonItem key="backBarButtonItem" title="Logout" id="GQx-g2-1JJ"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Logout" id="Fkd-aA-3nr"/>
                     <connections>
                         <outlet property="emailField" destination="po0-fX-ILI" id="Tbg-eS-fLB"/>
                         <outlet property="passwordField" destination="Mjq-kV-VgH" id="crr-AV-2WE"/>
@@ -442,12 +440,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nQL-c7-Aml"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6vV-KF-Qax"/>
+                    <navigationItem key="navigationItem" id="6vV-KF-Qax">
+                        <nil key="title"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="messageInputField" destination="5fF-Sl-LEM" id="Nlt-vc-YH3"/>
                         <outlet property="sendButton" destination="Q4B-Ur-JiZ" id="AOV-bs-QrW"/>
                         <outlet property="tableView" destination="7jU-oB-gC7" id="aXK-t7-vXO"/>
-                        <segue destination="37u-AQ-77d" kind="unwind" identifier="unwindToVC" unwindAction="unwindToViewControllerWithSegue:" id="1yJ-uT-6LI"/>
+                        <segue destination="37u-AQ-77d" kind="unwind" identifier="unwindToLoginVC" unwindAction="unwindToLoginVCWithSegue:" id="fZn-qi-3UR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pl6-4H-l5A" userLabel="First Responder" sceneMemberID="firstResponder"/>

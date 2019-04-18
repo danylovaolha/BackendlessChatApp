@@ -7,6 +7,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var messageInputField: UITextView!
     @IBOutlet weak var sendButton: UIButton!
     
+    private(set) var channel: Channel?
     var yourUser: BackendlessUser!
     
     private var messages: [MessageObject]!
@@ -45,7 +46,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func subscribeForChannel() {
-        let channel = Backendless.sharedInstance()?.messaging.subscribe(channelName)
+        channel = Backendless.sharedInstance()?.messaging.subscribe(channelName)
         
         channel?.addMessageListenerDictionary({ message in
             let messageObject = MessageObject()
@@ -86,6 +87,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unregisterKeyboardNotifications()
+        
+        if self.isMovingFromParent {
+            performSegue(withIdentifier: "unwindToLoginVC", sender: nil)
+        }
     }
     
     override func viewDidLayoutSubviews() {

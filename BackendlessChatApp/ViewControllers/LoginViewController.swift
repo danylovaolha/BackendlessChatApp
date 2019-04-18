@@ -8,11 +8,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     
+    let chatSegue = "segueToChatVC"
+    
     private var currentTextField: UITextField?
     private var yourUser: BackendlessUser?
     
-    private let alert = Alert.shared
-    private let chatSegue = "segueToChatVC"
+    private let alert = Alert.shared    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +29,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.toolbar.isHidden = true
+        registerKeyboardNotifications()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let currentUser = Backendless.sharedInstance()?.userService.currentUser, Backendless.sharedInstance()?.userService.isValidUserToken() ?? false {
             self.yourUser = currentUser
             performSegue(withIdentifier: chatSegue, sender: nil)
         }
-        
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.toolbar.isHidden = true
-        registerKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -88,6 +92,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
     
     func clearFields() {
+        self.view.endEditing(true)
         self.emailField.text = ""
         self.passwordField.text = ""
     }
@@ -104,6 +109,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
             let password = passwordField.text, !password.isEmpty {
             Backendless.sharedInstance()?.userService.login(email, password: password, response: { loggedInUser in
                 self.yourUser = loggedInUser
+                self.clearFields()
                 self.performSegue(withIdentifier: self.chatSegue, sender: nil)
             }, error: { fault in
                 self.clearFields()
@@ -123,6 +129,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     }
     
     @IBAction func unwindToLoginVC(segue: UIStoryboardSegue) {
-        
+        if let chatVC = segue.source as? ChatViewController,
+            let channel = chatVC.channel {
+            channel.leave()
+            Backendless.sharedInstance()?.userService.setStayLoggedIn(false)
+            Backendless.sharedInstance()?.userService.logout({ }, error: { fault in
+                if let errorMessage = fault?.message {
+                    self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+                }
+            })
+        }
     }
 }

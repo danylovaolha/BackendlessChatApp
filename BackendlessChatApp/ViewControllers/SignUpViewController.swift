@@ -77,6 +77,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIScrollViewD
     }
     
     func clearFields() {
+        self.view.endEditing(true)
         self.nameField.text = ""
         self.emailField.text = ""
         self.passwordField.text = ""
