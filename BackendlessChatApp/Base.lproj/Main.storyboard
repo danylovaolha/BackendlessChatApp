@@ -441,11 +441,11 @@
                         <outlet property="messageInputField" destination="5fF-Sl-LEM" id="Nlt-vc-YH3"/>
                         <outlet property="sendButton" destination="Q4B-Ur-JiZ" id="AOV-bs-QrW"/>
                         <outlet property="tableView" destination="7jU-oB-gC7" id="aXK-t7-vXO"/>
-                        <segue destination="37u-AQ-77d" kind="unwind" identifier="unwindToVC" unwindAction="unwindToViewControllerWithSegue:" id="1yJ-uT-6LI"/>
+                        <segue destination="HTb-tf-7C6" kind="unwind" identifier="unwindToLoginVC" unwindAction="unwindToLoginVCWithSegue:" id="Guw-Hy-koj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pl6-4H-l5A" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="37u-AQ-77d" userLabel="Exit" sceneMemberID="exit"/>
+                <exit id="HTb-tf-7C6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2757.971014492754" y="95.380434782608702"/>
         </scene>

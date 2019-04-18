@@ -73,4 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
     
     @IBAction func pressedStartChatting(_ sender: Any) {
     }
+    
+    @IBAction func unwindToLoginVC(segue: UIStoryboardSegue) {
+    }
 }

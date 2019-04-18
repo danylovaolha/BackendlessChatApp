@@ -26,6 +26,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func clearMessageField() {
+        self.view.endEditing(true)
         self.sendButton.isEnabled = false
         self.messageInputField.text = "Message"
         self.messageInputField.textColor = UIColor.lightGray
