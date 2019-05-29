@@ -56,4 +56,14 @@ class Alert: NSObject {
         onViewController.view.endEditing(true)
         onViewController.present(alert, animated: true)
     }
+    
+    func showEditMessageAlert(onViewController: UIViewController, editAction: UIAlertAction, deleteAction: UIAlertAction, cancelAction: UIAlertAction) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(editAction)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        alert.view.tintColor = darkBlueColor
+        onViewController.view.endEditing(true)
+        onViewController.present(alert, animated: true)
+    }
 }

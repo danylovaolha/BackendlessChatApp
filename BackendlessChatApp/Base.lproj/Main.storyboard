@@ -309,6 +309,9 @@
                                     <constraint firstAttribute="width" secondItem="Xwr-ec-vlX" secondAttribute="height" multiplier="1:1" id="TC4-bo-kKd"/>
                                 </constraints>
                                 <state key="normal" image="attachment.png"/>
+                                <connections>
+                                    <action selector="pressedAddAttachment:" destination="BW2-Qg-Mhq" eventType="touchUpInside" id="Kgx-Ie-qUP"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q4B-Ur-JiZ">
                                 <rect key="frame" x="374" y="696" width="30" height="30"/>
@@ -444,6 +447,7 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="attachmentButton" destination="Xwr-ec-vlX" id="3Cg-d0-IXX"/>
                         <outlet property="messageInputField" destination="5fF-Sl-LEM" id="Nlt-vc-YH3"/>
                         <outlet property="sendButton" destination="Q4B-Ur-JiZ" id="AOV-bs-QrW"/>
                         <outlet property="tableView" destination="7jU-oB-gC7" id="aXK-t7-vXO"/>
