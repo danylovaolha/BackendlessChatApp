@@ -22,6 +22,7 @@
 		5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E855E1A224ACB2C0012FC03 /* ChatViewController.swift */; };
 		5E9BA976225E005F00550D97 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9BA975225E005F00550D97 /* Alert.swift */; };
 		5EA0E54D225E1FB50013CF9B /* MessageObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA0E54C225E1FB50013CF9B /* MessageObject.swift */; };
+		5EA7461622A12E86003E7BA7 /* MyImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA7461522A12E86003E7BA7 /* MyImageCell.swift */; };
 		7B08CE2306311D64B70D001F /* Pods_BackendlessChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59A3BC3330D5C8FE46658355 /* Pods_BackendlessChatApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		5E9BA975225E005F00550D97 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5E9E4E73224AC10A008ECAAC /* BackendlessChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BackendlessChatApp.entitlements; sourceTree = "<group>"; };
 		5EA0E54C225E1FB50013CF9B /* MessageObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageObject.swift; sourceTree = "<group>"; };
+		5EA7461522A12E86003E7BA7 /* MyImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImageCell.swift; sourceTree = "<group>"; };
 		8EB3FCD1A10C63F548D123BF /* Pods-BackendlessChatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackendlessChatApp.release.xcconfig"; path = "Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp.release.xcconfig"; sourceTree = "<group>"; };
 		B038C22AC4A324A30B657C2F /* Pods-BackendlessChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BackendlessChatApp.debug.xcconfig"; path = "Target Support Files/Pods-BackendlessChatApp/Pods-BackendlessChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 			children = (
 				5E1BBC62225DE7D0000F2BEF /* MyTextMessageCell.swift */,
 				5E1BBC64225DE7EA000F2BEF /* TextMessageCell.swift */,
+				5EA7461522A12E86003E7BA7 /* MyImageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				5E855E1B224ACB2C0012FC03 /* ChatViewController.swift in Sources */,
 				5E1BBC63225DE7D0000F2BEF /* MyTextMessageCell.swift in Sources */,
 				5A312FCF224A3FDF00CDB109 /* AppDelegate.swift in Sources */,
+				5EA7461622A12E86003E7BA7 /* MyImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

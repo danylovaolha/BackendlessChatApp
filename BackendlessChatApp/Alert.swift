@@ -66,4 +66,14 @@ class Alert: NSObject {
         onViewController.view.endEditing(true)
         onViewController.present(alert, animated: true)
     }
+    
+    func showSendImageAlert(onViewController: UIViewController, cameraAction: UIAlertAction, galleryAction: UIAlertAction, cancelAction: UIAlertAction) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cancelAction)
+        alert.view.tintColor = darkBlueColor
+        onViewController.view.endEditing(true)
+        onViewController.present(alert, animated: true)
+    }
 }

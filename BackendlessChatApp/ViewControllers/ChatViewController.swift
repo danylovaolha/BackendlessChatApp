@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageInputField: UITextView!
@@ -9,13 +9,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var attachmentButton: UIButton!
     
     private(set) var channel: Channel?
-    var yourUser: BackendlessUser!
+    private var yourUser: BackendlessUser!
+    private var imageData: Data?
     
     private var messages: [MessageObject]!
     private var messageStore: IDataStore!
     private var messageStoreMap: IDataStore!
     private var longTapped = false
     private var editMode = false
+    private var imageMode = false
     private var editingMessage: MessageObject?
     
     private let channelName = "MyChannel"
@@ -39,6 +41,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.toolbar.isHidden = false
         registerKeyboardNotifications()
         addMessageListeners()
+        self.yourUser = Backendless.sharedInstance()?.userService.currentUser
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,14 +94,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let userName = message["userName"] as? String {
                     messageObject.userName = userName
                 }
-                if let messageText = message["messageText"] as? String {
-                    messageObject.messageText = messageText
-                }
                 if let created = message["created"] as? Int {
                     messageObject.created = self.intToDate(intVal: created)
                 }
                 if let updated = message["updated"] as? Int {
                     messageObject.updated = self.intToDate(intVal: updated)
+                }
+                if let imagePath = message["imagePath"] as? String {
+                    messageObject.imagePath = imagePath
+                }
+                else if let messageText = message["messageText"] as? String {
+                    messageObject.messageText = messageText
                 }
                 self.messages.append(messageObject)
                 self.tableView.reloadData()
@@ -250,24 +256,41 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss / MMM d, yyyy"
         
-        if messageObject.userId == yourUser.objectId as String?,
-            let messageText = messageObject.messageText,
-            let created = messageObject.created {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MyTextMessageCell", for: indexPath) as! MyTextMessageCell
-            cell.textView.text = messageText
+        if messageObject.userId == yourUser.objectId as String? {
             
-            if let updated = messageObject.updated {
-                cell.dateLabel.text = "updated " + formatter.string(from: updated)
+            // text
+            if let messageText = messageObject.messageText,
+                let created = messageObject.created {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MyTextMessageCell", for: indexPath) as! MyTextMessageCell
+                cell.textView.text = messageText
+                
+                if let updated = messageObject.updated {
+                    cell.dateLabel.text = "updated " + formatter.string(from: updated)
+                }
+                else {
+                    cell.dateLabel.text = formatter.string(from: created)
+                }
+                
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
+                longPress.minimumPressDuration = 0.5
+                cell.addGestureRecognizer(longPress)
+                
+                return cell
             }
-            else {
+            
+            // image
+            if let imagePath = messageObject.imagePath,
+                let created = messageObject.created {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MyImageCell", for: indexPath) as! MyImageCell
+                cell.imageButton.setTitle(imagePath,for: .normal)
                 cell.dateLabel.text = formatter.string(from: created)
+                
+                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
+                longPress.minimumPressDuration = 0.5
+                cell.addGestureRecognizer(longPress)
+                
+                return cell
             }
-            
-            let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
-            longPress.minimumPressDuration = 0.5
-            cell.textView.addGestureRecognizer(longPress)
-            
-            return cell
         }
         else {
             if  let userName = messageObject.userName,
@@ -293,12 +316,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return Date(timeIntervalSince1970: TimeInterval(intVal / 1000))
     }
     
+    func dateToString(date: Date) -> String {
+        let intVal = Int(date.timeIntervalSince1970)
+        return String(intVal)
+    }
+    
     func editModeEnabled() {
         self.editMode = true
         self.messageInputField.becomeFirstResponder()
         self.sendButton.setImage(UIImage(named: "done.png"), for: .normal)
         self.attachmentButton.setImage(UIImage(named: "cancel.png"), for: .normal)
-        self.attachmentButton.isEnabled = true
     }
     
     func editModeDisabled() {
@@ -306,7 +333,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.clearMessageField()
         self.sendButton.setImage(UIImage(named: "send.png"), for: .normal)
         self.attachmentButton.setImage(UIImage(named: "attachment.png"), for: .normal)
-        self.attachmentButton.isEnabled = false
+    }
+    
+    func imageModeEnabled(imageName: String) {
+        self.imageMode = true
+        self.messageInputField.text = imageName
+        self.messageInputField.isEditable = false
+        self.messageInputField.isUserInteractionEnabled = false
+        self.attachmentButton.setImage(UIImage(named: "cancel.png"), for: .normal)
+        self.sendButton.isEnabled = true
+    }
+    
+    func imageModeDisabled() {
+        self.imageMode = false
+        self.clearMessageField()
+        self.messageInputField.isEditable = true
+        self.messageInputField.isUserInteractionEnabled = true
+        self.attachmentButton.setImage(UIImage(named: "attachment.png"), for: .normal)
     }
     
     @IBAction func longPress(sender: UILongPressGestureRecognizer) {
@@ -339,9 +382,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func pressedSend(_ sender: Any) {
         if !editMode {
             let messageObject = MessageObject()
-            if let messageText = messageInputField.text {
-                messageObject.messageText = messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-            }
             if let userName = yourUser.name {
                 messageObject.userName = userName as String?
             }
@@ -350,9 +390,31 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             messageObject.userId = yourUser.objectId as String?
             
+            if let imageData = self.imageData,
+                let imageName = messageInputField.text {
+                self.imageData = nil
+                self.imageModeDisabled()
+                messageObject.imagePath = "chatFiles/" + imageName
+                Backendless.sharedInstance().file.uploadFile("chatFiles/" + imageName, content: imageData, response: { uploadedPicture in
+                    if let index = self.messages.firstIndex(where: {$0.imagePath == "chatFiles/" + imageName}) {
+                        DispatchQueue.main.async {
+                            self.tableView.reloadRows(at: [IndexPath(item: index, section: 0)], with: .fade)
+                        }
+                    }
+                }, error: { fault in
+                    if let errorMessage = fault?.message {
+                        self.alert.showErrorAlert(message: errorMessage, onViewController: self)
+                    }
+                })
+            }
+                
+            else if let messageText = messageInputField.text {
+                messageObject.messageText = messageText.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                self.clearMessageField()
+            }
+            
             messageStore.save(messageObject, response: { savedMessageObject in
                 Backendless.sharedInstance()?.messaging.publish(self.channelName, message: savedMessageObject, response: { messageStatus in
-                    self.clearMessageField()
                 }, error: { fault in
                     if let errorMessage = fault?.message {
                         self.alert.showErrorAlert(message: errorMessage, onViewController: self)
@@ -379,13 +441,74 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func pressedAddAttachment(_ sender: Any) {
-        if !editMode {
-            
+        if !editMode && !imageMode {
+            let cameraAction = UIAlertAction(title: "Use camera", style: .default, handler: { action in
+                if (!UIImagePickerController.isSourceTypeAvailable(.camera)) {
+                    self.alert.showErrorAlert(message: "Camera is available only on real devices", onViewController: self)
+                }
+                else {
+                    let cameraPicker = UIImagePickerController()
+                    cameraPicker.sourceType = .camera
+                    cameraPicker.delegate = self
+                    self.present(cameraPicker, animated: true, completion: nil)
+                }
+            })
+            let galleryAction = UIAlertAction(title: "Select from library", style: .default, handler: { acion in
+                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.sourceType = .photoLibrary
+                    imagePicker.delegate = self
+                    imagePicker.allowsEditing = false
+                    self.present(imagePicker, animated: true, completion: nil)
+                }
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            alert.showSendImageAlert(onViewController: self, cameraAction: cameraAction, galleryAction: galleryAction, cancelAction: cancelAction)
         }
-        else {
+        else if editMode {
             self.editModeDisabled()
         }
+        else if imageMode {
+            self.imageModeDisabled()
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        dismiss(animated: true, completion: nil)
+        if let image = info[self.convertFromUIImagePickerControllerInfoKey(.originalImage)] as? UIImage {
+            let img = UIImage(cgImage: image.cgImage!)
+            self.imageData = img.pngData()
+            if var userId = yourUser.objectId as String? {
+                userId = String(userId.replacingOccurrences(of: "-", with: "").prefix(5))
+                let uuid = String(UUID().uuidString.prefix(5))
+                let imgName = userId + uuid + dateToString(date: Date()) + ".png"
+                imageModeEnabled(imageName: imgName)
+            }
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+        return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+    }
+    
+    private func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+        return input.rawValue
+    }
+    
+    private func saveImageToUserDefaults(image: UIImage, key: String) {
+        UserDefaults.standard.setValue(image.pngData(), forKey: key)
+        UserDefaults.standard.synchronize()
+    }
+    
+    private func getImageFromUserDefaults(key: String) -> UIImage? {
+        if let imageData = UserDefaults.standard.object(forKey: key) as? Data {
+            return UIImage(data: imageData)
+        }
+        return nil
     }
 }
-
-
