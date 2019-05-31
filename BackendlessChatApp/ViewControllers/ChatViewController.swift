@@ -283,6 +283,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let created = messageObject.created {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MyImageCell", for: indexPath) as! MyImageCell
                 cell.imageButton.setTitle(imagePath,for: .normal)
+                cell.imageButton.tag = indexPath.row
+                cell.imageButton.addTarget(self,action:#selector(imageButtonClicked(sender:)), for: .touchUpInside)
+                
                 cell.dateLabel.text = formatter.string(from: created)
                 
                 let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
@@ -310,6 +313,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         return UITableViewCell()
+    }
+    
+    @IBAction func imageButtonClicked(sender: UIButton) {
+        self.performSegue(withIdentifier: "ShowImage", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowImage",
+            let cell = (sender as! UIButton).superview?.superview as? UITableViewCell,
+            let indexPath = tableView.indexPath(for: cell) {
+            let message = messages[indexPath.row]
+            print(message.imagePath)
+        }
     }
     
     func intToDate(intVal: Int) -> Date {
