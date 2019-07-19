@@ -76,4 +76,30 @@ class Alert: NSObject {
         onViewController.view.endEditing(true)
         onViewController.present(alert, animated: true)
     }
+    
+    func showSaveImageAlert(onViewController: UIViewController, image: UIImage, saveAction: UIAlertAction) {
+        let alert = UIAlertController(title: "Save image to Photos", message: "Would you like to save this image in the photo library?", preferredStyle: .alert)
+        alert.addAction(saveAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.view.tintColor = darkBlueColor
+        onViewController.view.endEditing(true)
+        onViewController.present(alert, animated: true)
+    }
+    
+    func showSavedImageAlert(onViewController: UIViewController) {
+        let alert = UIAlertController(title: "Saved", message: "Image has been saved in photo library", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.view.tintColor = darkBlueColor
+        onViewController.view.endEditing(true)
+        onViewController.present(alert, animated: true)
+    }
+    
+    func showDeleteImageAlert(onViewController: UIViewController, deleteAction: UIAlertAction) {
+        let alert = UIAlertController(title: "Delete image", message: "Would you like to delete this image from chat?", preferredStyle: .alert)
+        alert.addAction(deleteAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.view.tintColor = darkBlueColor
+        onViewController.view.endEditing(true)
+        onViewController.present(alert, animated: true)
+    }
 }

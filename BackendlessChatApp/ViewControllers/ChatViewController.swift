@@ -26,6 +26,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
+        navigationItem.title = channelName
         setupMessageField()
         clearMessageField()
         messages = [MessageObject]()
@@ -257,27 +258,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         formatter.dateFormat = "HH:mm:ss / MMM d, yyyy"
         
         if messageObject.userId == yourUser.objectId as String? {
-            
             // text
             if let messageText = messageObject.messageText,
                 let created = messageObject.created {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "MyTextMessageCell", for: indexPath) as! MyTextMessageCell
                 cell.textView.text = messageText
-                
                 if let updated = messageObject.updated {
                     cell.dateLabel.text = "updated " + formatter.string(from: updated)
                 }
                 else {
                     cell.dateLabel.text = formatter.string(from: created)
                 }
-                
                 let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
                 longPress.minimumPressDuration = 0.5
                 cell.addGestureRecognizer(longPress)
                 
                 return cell
             }
-            
             // image
             if let imagePath = messageObject.imagePath,
                 let created = messageObject.created {
@@ -285,30 +282,34 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 cell.imageButton.setTitle(imagePath,for: .normal)
                 cell.imageButton.tag = indexPath.row
                 cell.imageButton.addTarget(self,action:#selector(imageButtonClicked(sender:)), for: .touchUpInside)
-                
                 cell.dateLabel.text = formatter.string(from: created)
-                
-                let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(sender:)))
-                longPress.minimumPressDuration = 0.5
-                cell.addGestureRecognizer(longPress)
-                
                 return cell
             }
         }
-        else {
-            if  let userName = messageObject.userName,
-                let messageText = messageObject.messageText,
+        else if let userName = messageObject.userName {
+            // text
+            if let messageText = messageObject.messageText,
                 let created = messageObject.created {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TextMessageCell", for: indexPath) as! TextMessageCell
                 cell.userNameLabel.text = userName
                 cell.textView.text = messageText
-                
                 if let updated = messageObject.updated {
                     cell.dateLabel.text = "updated " + formatter.string(from: updated)
                 }
                 else {
                     cell.dateLabel.text = formatter.string(from: created)
                 }
+                return cell
+            }
+                // image
+            else if let imagePath = messageObject.imagePath,
+                let created = messageObject.created {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath) as! ImageCell
+                cell.imageButton.setTitle(imagePath,for: .normal)
+                cell.imageButton.tag = indexPath.row
+                cell.imageButton.addTarget(self,action:#selector(imageButtonClicked(sender:)), for: .touchUpInside)
+                cell.userNameLabel.text = userName
+                cell.dateLabel.text = formatter.string(from: created)
                 return cell
             }
         }
@@ -324,7 +325,17 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = (sender as! UIButton).superview?.superview as? UITableViewCell,
             let indexPath = tableView.indexPath(for: cell) {
             let message = messages[indexPath.row]
-            print(message.imagePath)
+            if let imagePath = message.imagePath,
+                let imageVC = segue.destination as? ImageViewController,
+                let messageId = message.objectId,
+                let messageUserId = message.userId {
+                imageVC.messageId = messageId
+                imageVC.messageUserId = messageUserId
+                imageVC.shortImagePath = imagePath
+            }
+            else {
+                alert.showErrorAlert(message: "Image not found", onViewController: self)
+            }
         }
     }
     
@@ -374,7 +385,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             let touch = sender.location(in: self.tableView)
             if let indexPath = tableView.indexPathForRow(at: touch),
                 let messageObject = self.messages?[indexPath.row],
-                messageObject.userId == yourUser.objectId as String? {
+                messageObject.userId == yourUser.objectId as String?,
+                messageObject.imagePath == nil {
                 let editAction = UIAlertAction(title: "Edit", style: .default, handler: { action in
                     self.editModeEnabled()
                     self.editingMessage = messageObject
@@ -516,15 +528,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return input.rawValue
     }
     
-    private func saveImageToUserDefaults(image: UIImage, key: String) {
-        UserDefaults.standard.setValue(image.pngData(), forKey: key)
-        UserDefaults.standard.synchronize()
-    }
-    
-    private func getImageFromUserDefaults(key: String) -> UIImage? {
-        if let imageData = UserDefaults.standard.object(forKey: key) as? Data {
-            return UIImage(data: imageData)
-        }
-        return nil
+    @IBAction func unwindToChatVC(segue: UIStoryboardSegue) {
+        loadMessages()
     }
 }
